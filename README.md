@@ -34,6 +34,11 @@ For Windows run `py -3 -m venv venv` where venv is the name virtual environment 
 
 Run `pip install -r requirements.txt` to install dependancies
 
+## Running the app
+To run this flask application
+
+>Run `python -m flask run`
+
 ## Running tests
 To run this project's tests using pytest:
 
