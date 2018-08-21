@@ -1,7 +1,7 @@
 # Stackoverflow-lite
-[![Build Status](https://travis-ci.com/bernard-murunga/stackoverflow-lite.svg?branch=feature)](https://travis-ci.com/bernard-murunga/stackoverflow-lite)
-[![Coverage Status](https://coveralls.io/repos/github/bernard-murunga/stackoverflow-lite/badge.svg?branch=feature)](https://coveralls.io/github/bernard-murunga/stackoverflow-lite?branch=feature)
-[![Maintainability](https://api.codeclimate.com/v1/badges/661ddfa49e279ba9dba5/maintainability)](https://codeclimate.com/github/bernard-murunga/stackoverflow-lite/maintainability)
+[![Build Status](https://travis-ci.com/bernard-murunga/stackoverflow-lite-Api.svg?branch=develop)](https://travis-ci.com/bernard-murunga/stackoverflow-lite-Api)
+[![Coverage Status](https://coveralls.io/repos/github/bernard-murunga/stackoverflow-lite-Api/badge.svg?branch=develop)](https://coveralls.io/github/bernard-murunga/stackoverflow-lite-Api?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/880b50a5e8cb52474ec7/maintainability)](https://codeclimate.com/github/bernard-murunga/stackoverflow-lite-Api/maintainability)
 
 This web application allows users to:
 
