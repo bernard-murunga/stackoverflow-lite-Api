@@ -20,7 +20,7 @@ questions = [
 def get_questions():
     return jsonify({'questions': questions})
 
-
+#  Handle status code 404 errors
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
