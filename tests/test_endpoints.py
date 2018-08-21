@@ -56,7 +56,7 @@ class PreferAnswer(BaseTestCase):
         result_data = json.loads(result.data)
 
         self.assertEqual(result_data.status_code, 401)
-        self.assertEqual(result_data['message', 'You are not authorized to mark or accept answer'])
+        self.assertEqual(result_data['message'], 'You are not authorized to mark or accept answer')
 
 
 if __name__ == '__main__':
