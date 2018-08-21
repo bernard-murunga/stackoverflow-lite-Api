@@ -7,7 +7,7 @@ install:
 # command to run tests
 script:
   - python -m pytest
-  - python -m pytest --cov=api /tests
+  - python -m pytest --cov=api tests/
 # Coveralls to show test coverage of the modules
 after_success:
   - coveralls
