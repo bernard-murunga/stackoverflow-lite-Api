@@ -25,3 +25,16 @@ class Answers_model():
 
         except psycopg2.DatabaseError as error:
             print(error)
+
+
+    def accept_answer(question_id, answer_id):
+        #  mark answers as preferred
+        try:
+            query = "UPDATE answers SET preferred = true WHERE id = %s AND question_id = %s;"
+            cur.execute(query, [answer_id, question_id])
+            conn.commit()
+
+            return "Successfully accepted answer"
+
+        except psycopg2.DatabaseError as error:
+            print(error)

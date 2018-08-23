@@ -33,4 +33,16 @@ def duplicate_answer(answer_details):
             return 'Answer exists'
 
 
+def check_question_author(user_id, question_id):
+        #  check question author so that they can accept answers
+
+        query = "SELECT * FROM questions WHERE question_id = %s;"
+        cur.execute(query, [question_id])
+        result = cur.fetchall()
+
+        for i in result:
+            if i[1] != user_id:  ## user_id is at index 1 in answers table
+                return "You don't have permission to accept answer"
+
+
 

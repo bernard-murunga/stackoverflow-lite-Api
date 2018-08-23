@@ -22,26 +22,6 @@ class Answers(Resource):
 
         args = self.reqparse.parse_args()
 
-        # if 'answer_details' not in request.json:
-        #     return {"message": "Answer details is required."}, 400
-
-        # answer = [answer for answer in answers_dictionary if answer['question_id'] == question_id]
-
-        # if len(answer) == 0:
-        #     return {"message": "Question doesn't exist"}, 404
-
-        # new_answer = {
-        #     "user_id": 1,
-        #     "question_id": question_id,
-        #     "answer_id": answers_dictionary[-1]['answer_id'] + 1,
-        #     "answer_details": args['answer_details'],
-        #     "preferred": "no",
-        #     "created_at": now,
-        #     "updated_at": now
-        # }
-
-        # answers_dictionary.append(new_answer)
-
         user_id = 1  # change later with JWT
 
         all_questions = Questions_model.get_questions()
@@ -63,19 +43,29 @@ class Answers(Resource):
 
     # mark preferred answers
     def put(self,question_id,answer_id):
-        question = [question for question in answers_dictionary if question['question_id'] == question_id]
-        answer = [answer for answer in answers_dictionary if answer['answer_id'] == answer_id]
+        # question = [question for question in answers_dictionary if question['question_id'] == question_id]
+        # answer = [answer for answer in answers_dictionary if answer['answer_id'] == answer_id]
 
-        if len(question) == 0:
-            return {"message": "Question doesn't exist"}, 404
+        # if len(question) == 0:
+        #     return {"message": "Question doesn't exist"}, 404
 
-        if len(answer) == 0:
-            return {"message": "Answer doesn't exist"},404
+        # if len(answer) == 0:
+        #     return {"message": "Answer doesn't exist"},404
 
-        answer[0]['preferred'] = request.json['preferred']
-        answer[0]['updated_at'] = str(now)
+        # answer[0]['preferred'] = request.json['preferred']
+        # answer[0]['updated_at'] = str(now)
 
-        return jsonify({"message": "Answer updated"}, {"answers": answer[0]})
+        user_id = 1  ## change using JWT
+
+        author_confirmation = validations.check_question_author(user_id, question_id) 
+
+        if author_confirmation:
+            return {"message": author_confirmation}
+
+        approval = Answers_model.accept_answer(question_id, answer_id)
+
+        if approval:
+            return {"message": "Answer accepted"}, 201
 
 
 
