@@ -8,6 +8,8 @@ class Questions_model():
         self.user_id = user_id
 
     def get_questions():
+        #  Get all questions from database
+
         all_questions = list()
 
         try:
@@ -28,6 +30,7 @@ class Questions_model():
 
     
     def insert_question(self):
+        #  Insert questions title and details to questions table
 
         data = dict(user_id = self.user_id, question_title=self.question_title, question_details = self.question_details)
 
@@ -43,6 +46,8 @@ class Questions_model():
             print(error)
 
     def one_question():
+        # Get questions
+
         all_questions = list()
 
         try:
@@ -60,3 +65,12 @@ class Questions_model():
             
         print(all_questions)
         return all_questions
+
+    def del_question(question_id):
+        #  Delete a question
+
+        query = "DELETE FROM questions WHERE question_id = %s;"
+        cur.execute(query, [question_id])
+        conn.commit()
+
+        return "Deletion successful"

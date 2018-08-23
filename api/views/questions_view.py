@@ -54,15 +54,7 @@ class Questions(Resource):
 class SpecificQuestion(Resource):
     #  Get question using the question id   
     def get(self, question_id):
-        
-        # single_question = [question for question in questions_dictionary if question['question_id'] == question_id]
-
-        # if len(single_question) == 0:
-        #     return {"message": "Question can't be blank"}, 404
-
-        # return {"message": "Question found", "questions": single_question}  
-        
-        
+                
         all_questions = Questions_model.one_question()
 
         single_question = [question for question in all_questions if question['question_id'] == question_id]
@@ -76,14 +68,19 @@ class SpecificQuestion(Resource):
 
     # Delete specific question by author
     def delete(self, question_id):
-        question = [question for question in questions_dictionary if question['question_id'] == question_id]
+        all_questions = Questions_model.get_questions()
+        
+        check_question = validations.question_id_found(all_questions, question_id)
 
-        if len(question) == 0:
-            return {"message": "Question to be deleted not found"}, 404
+        if check_question:
+            return {"message": "Question not found"}, 400
 
-        questions_dictionary.remove(question[0])
+       
+        question = question_id
+        result = Questions_model.del_question(question)
 
-        return jsonify({"message": "Question deleted"}, {"questions": questions_dictionary})
+        if result:
+            return {"message": "Question deleted"}
 
 
 
