@@ -37,3 +37,5 @@ class Questions_model():
         conn.commit()
 
         return "Successfully added question"
+
+    

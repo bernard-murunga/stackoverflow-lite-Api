@@ -3,6 +3,7 @@ from flask_restful import Resource, fields, marshal, reqparse
 import datetime
 from api.resources.questions import questions_dictionary
 from models.questions import Questions_model
+from Validate import validations
 
 
 now = datetime.datetime.now()
@@ -17,7 +18,10 @@ class Questions(Resource):
     #  Return all questions
     def get(self):
         all_questions = Questions_model.get_questions()
-        return {"message": "Questions found"},{"questions": all_questions}
+        if not all_questions:
+            return {"message": "No questions yet."}, 400
+
+        return {"message": "Questions found", "questions": all_questions}
 
     #  Post a question.
     def post(self):
@@ -30,10 +34,18 @@ class Questions(Resource):
 
         args = self.reqparse.parse_args()
 
+        all_questions = Questions_model.get_questions()
+        
+        check_question = validations.question_exists(all_questions, args['question_title'],args['question_details'])
+
+        if check_question:
+            return {"message": check_question}, 400
+
+
         user_id = 1
         
-        questions = Questions_model(args['question_title'], args['question_details'], user_id).insert_question()
-
+        questions = Questions_model(args['question_title'], args['question_details'],
+             user_id).insert_question()     
         
         if questions:
             return {"message": "Question posted", "questions": marshal(questions, question_fields)}, 201
