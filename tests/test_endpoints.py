@@ -54,8 +54,8 @@ class PostQuestion(BaseTestCase):
             self.test_question),  content_type='application/json')
         result_data = json.loads(result.data)
 
-        self.assertEqual(result.status_code, 200)
-        self.assertEqual(result_data[0]['message'], 'Question posted')
+        self.assertEqual(result.status_code, 201)
+        self.assertEqual(result_data['message'], 'Question posted')
 
 
 class PostAnswer(BaseTestCase):
@@ -64,7 +64,7 @@ class PostAnswer(BaseTestCase):
             self.test_answer),  content_type='application/json')
         result_data = json.loads(result.data)
 
-        self.assertEqual(result.status_code, 200)
+        self.assertEqual(result.status_code, 201)
         self.assertEqual(result_data[0]['message'], 'Answer posted')
 
 

@@ -1,16 +1,26 @@
 from flask import jsonify, request
-from flask_restful import  Resource
+from flask_restful import  Resource, fields, marshal, reqparse
 import datetime
 from api.resources.answers import answers_dictionary
 
 now = datetime.datetime.now()
 
+answer_fields = {
+    'answer_details': fields.String
+}
 
 class Answers(Resource):
     #post answer
     def post(self,question_id):
-        if 'answer_details' not in request.json:
-            return {"message": "Answer details is required."}, 400
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('answer_details', type=str, required=True,
+                                   help='Answer details is required',
+                                   location='json')
+
+        args = self.reqparse.parse_args()
+
+        # if 'answer_details' not in request.json:
+        #     return {"message": "Answer details is required."}, 400
 
         answer = [answer for answer in answers_dictionary if answer['question_id'] == question_id]
 
@@ -21,7 +31,7 @@ class Answers(Resource):
             "user_id": 1,
             "question_id": question_id,
             "answer_id": answers_dictionary[-1]['answer_id'] + 1,
-            "answer_details": request.json['answer_details'],
+            "answer_details": args['answer_details'],
             "preferred": "no",
             "created_at": now,
             "updated_at": now
@@ -29,7 +39,7 @@ class Answers(Resource):
 
         answers_dictionary.append(new_answer)
 
-        return jsonify({"message": "Answer posted"}, {"answers": answers_dictionary})
+        return {"message": "Answer posted", "answers": marshal(new_answer, answer_fields)}, 201
 
     # mark preferred answers
     def put(self,question_id,answer_id):

@@ -10,6 +10,7 @@ class RegisterUser(Resource):
     def post(self):
         new_user = {
             "user_name": request.json['user_name'],
+            "email": request.json['email'],
             "password": request.json['password'],
             "created_at": str(now)
         }
