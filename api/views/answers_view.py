@@ -39,22 +39,11 @@ class Answers(Resource):
         new_answer = Answers_model.post_answer(user_id, question_id, args['answer_details'])
 
         if new_answer:
-            return {"message": "Answer posted", "answers": marshal(new_answer, answer_fields)}, 201
+            return {"message": "Answer posted"}, 201
 
     # mark preferred answers
     def put(self,question_id,answer_id):
-        # question = [question for question in answers_dictionary if question['question_id'] == question_id]
-        # answer = [answer for answer in answers_dictionary if answer['answer_id'] == answer_id]
-
-        # if len(question) == 0:
-        #     return {"message": "Question doesn't exist"}, 404
-
-        # if len(answer) == 0:
-        #     return {"message": "Answer doesn't exist"},404
-
-        # answer[0]['preferred'] = request.json['preferred']
-        # answer[0]['updated_at'] = str(now)
-
+        
         user_id = 1  ## change using JWT
 
         author_confirmation = validations.check_question_author(user_id, question_id) 

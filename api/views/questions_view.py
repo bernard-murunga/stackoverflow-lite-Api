@@ -48,7 +48,7 @@ class Questions(Resource):
              user_id).insert_question()     
         
         if questions:
-            return {"message": "Question posted", "questions": marshal(questions, question_fields)}, 201
+            return {"message": "Question posted"}, 201
 
 
 class SpecificQuestion(Resource):

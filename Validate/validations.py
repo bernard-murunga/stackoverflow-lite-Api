@@ -45,4 +45,19 @@ def check_question_author(user_id, question_id):
                 return "You don't have permission to accept answer"
 
 
+def check_user_duplication(all_users, username, email):
+    #check if user exists already
+
+    for user in all_users:
+        if user[1] == username:
+            return 'Username is taken, try another'
+        if user[2] == email:
+            return 'Email already in use, try another'
+
+
+def validate_username(username):
+    #  validate user input fields
+
+    if not isinstance(username,str):
+        return 'Please use words in username'
 
