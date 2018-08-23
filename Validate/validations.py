@@ -18,4 +18,19 @@ def question_id_found(question_list, question_id):
             return 'Question exists'
 
 
+def duplicate_answer(answer_details):
+    # checking if answer already exists
+            
+    try:
+        cur.execute("SELECT * FROM answers")
+    except (Exception, psycopg2.DatabaseError) as error:
+        print (error)
+        
+    results = cur.fetchall()    
+
+    for result in results:
+        if result[3] == answer_details:
+            return 'Answer exists'
+
+
 

@@ -61,7 +61,7 @@ class SpecificQuestion(Resource):
         
         
         if not single_question:
-            return {"message": "No questions yet."}, 400
+            return {"message": "No questions yet."}, 404
 
         return {"message": "Question found", "questions": single_question}
 
@@ -73,7 +73,7 @@ class SpecificQuestion(Resource):
         check_question = validations.question_id_found(all_questions, question_id)
 
         if check_question:
-            return {"message": "Question not found"}, 400
+            return {"message": "Question not found"}, 404
 
        
         question = question_id
