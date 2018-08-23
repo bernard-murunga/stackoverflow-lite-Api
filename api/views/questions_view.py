@@ -52,13 +52,24 @@ class Questions(Resource):
 
 
 class SpecificQuestion(Resource):
-    #  Get question using the question id
+    #  Get question using the question id   
     def get(self, question_id):
         
-        single_question = [question for question in questions_dictionary if question['question_id'] == question_id]
+        # single_question = [question for question in questions_dictionary if question['question_id'] == question_id]
 
-        if len(single_question) == 0:
-            return {"message": "Question can't be blank"}, 404
+        # if len(single_question) == 0:
+        #     return {"message": "Question can't be blank"}, 404
+
+        # return {"message": "Question found", "questions": single_question}  
+        
+        
+        all_questions = Questions_model.one_question()
+
+        single_question = [question for question in all_questions if question['question_id'] == question_id]
+        
+        
+        if not single_question:
+            return {"message": "No questions yet."}, 400
 
         return {"message": "Question found", "questions": single_question}
 
