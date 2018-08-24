@@ -4,12 +4,17 @@ from api.views.questions_view import Questions, SpecificQuestion
 from api.views.answers_view import Answers
 from api.views.user_view import RegisterUser, LoginUser
 from api.manage_db import create_tables
+from flask_jwt_extended import JWTManager
+
 
 def create_app():
     app = Flask(__name__)
     api = Api(app)
 
-    
+    app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
+    jwt = JWTManager(app)
+
+
     create_tables()
 
     api.add_resource(Questions, '/api/v1/questions')

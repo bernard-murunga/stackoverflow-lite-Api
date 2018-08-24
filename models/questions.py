@@ -19,13 +19,12 @@ class Questions_model():
         except psycopg2.DatabaseError as error:
             print(error)
 
+        
         results = cur.fetchall()
 
         for result in results:
             all_questions.append(dict(question_id = result[0] , user_id = result[1], question_title = result[2], question_detail = result[3]))
-
-            
-        print(all_questions)
+        
         return all_questions
 
     
@@ -63,14 +62,16 @@ class Questions_model():
             all_questions.append(dict(question_id = result[0] , user_id = result[1], question_title = result[2], question_detail = result[3]))
 
             
-        print(all_questions)
         return all_questions
 
     def del_question(question_id):
         #  Delete a question
+        try:
+            query = "DELETE FROM questions WHERE question_id = %s;"
+            cur.execute(query, [question_id])
+            conn.commit()
 
-        query = "DELETE FROM questions WHERE question_id = %s;"
-        cur.execute(query, [question_id])
-        conn.commit()
-
-        return "Deletion successful"
+            return "Deletion successful"
+        except psycopg2.DatabaseError as error:
+            print(error)
+        

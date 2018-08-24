@@ -36,3 +36,19 @@ class User_model():
         results = cur.fetchall()
 
         return results
+
+    def user_id(username, password):
+        #  return user id from users table       
+
+        try:
+            cur.execute("SELECT * FROM users")
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+
+        results = cur.fetchall()
+
+        for result in results:
+
+            if result[1] == username and check_password_hash(result[3]  , password):
+                user_id = result[0]
+                return user_id

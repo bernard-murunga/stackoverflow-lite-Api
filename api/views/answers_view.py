@@ -6,6 +6,11 @@ from models.answers import Answers_model
 from models.questions import Questions_model
 from Validate import validations
 
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
+)
+
 now = datetime.datetime.now()
 
 answer_fields = {
@@ -14,6 +19,7 @@ answer_fields = {
 
 class Answers(Resource):
     #post answer
+    @jwt_required
     def post(self,question_id):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('answer_details', type=str, required=True,
@@ -22,7 +28,7 @@ class Answers(Resource):
 
         args = self.reqparse.parse_args()
 
-        user_id = 1  # change later with JWT
+        user_id = get_jwt_identity()
 
         all_questions = Questions_model.get_questions()
         
@@ -42,9 +48,10 @@ class Answers(Resource):
             return {"message": "Answer posted"}, 201
 
     # mark preferred answers
+    @jwt_required
     def put(self,question_id,answer_id):
         
-        user_id = 1  ## change using JWT
+        user_id = get_jwt_identity()
 
         author_confirmation = validations.check_question_author(user_id, question_id) 
 

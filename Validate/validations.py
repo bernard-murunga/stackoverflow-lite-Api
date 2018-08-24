@@ -11,11 +11,18 @@ def question_exists(question_list, question_title, question_details):
 
 
 def question_id_found(question_list, question_id):
-    """check for single question existence"""
+    """find individual question"""
 
-    for question in question_list:
-        if question['question_title'] == question_id:
-            return 'Question exists'
+    try:
+        query = "SELECT * FROM questions WHERE question_id = %s;"
+        cur.execute(query, [question_id])
+    except (Exception, psycopg2.DatabaseError) as error:
+        print (error)
+        
+    results = cur.fetchall()    
+
+    return results
+
 
 
 def duplicate_answer(answer_details):
@@ -38,10 +45,10 @@ def check_question_author(user_id, question_id):
 
         query = "SELECT * FROM questions WHERE question_id = %s;"
         cur.execute(query, [question_id])
-        result = cur.fetchall()
+        results = cur.fetchall()
 
-        for i in result:
-            if i[1] != user_id:  ## user_id is at index 1 in answers table
+        for result in results:
+            if results[1] != user_id:  ## user_id is at index 1 in answers table
                 return "You don't have permission to accept answer"
 
 

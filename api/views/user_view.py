@@ -4,6 +4,9 @@ import datetime
 from api.resources.users import user_list
 from models.users import User_model
 from Validate import validations
+from flask_jwt_extended import (create_access_token, create_refresh_token,
+ jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+
 
 now = datetime.datetime.now()
 
@@ -16,15 +19,7 @@ user_fields = {
 class RegisterUser(Resource):
     # Register user
     def post(self):
-        # new_user = {
-        #     "user_name": request.json['user_name'],
-        #     "email": request.json['email'],
-        #     "password": request.json['password'],
-        #     "created_at": str(now)
-        # }
-
-        # user_list.append(new_user)
-
+        
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('username', type=str, required=True,
                                    help='Username is required',
@@ -50,14 +45,37 @@ class RegisterUser(Resource):
 
         new_user = User_model.register_user(args['username'], args['email'], args['password'])
 
+        access_token = create_access_token(identity = args['username'])
+        refresh_token = create_refresh_token(identity = args['username'])
+
         if new_user:
-            return {"message": "User created"}
+            return {"message": "User created", "access_token": access_token,
+             "refresh_token": refresh_token}
 
 
 class LoginUser(Resource):
     def post(self):
-        username = request.json['username']
-        password = request.json['password']
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('username', type=str, required=True,
+                                   help='Username is required',
+                                   location='json')
 
-        return {"message": "Login successful", "username": username}
+        self.reqparse.add_argument('password', type=str, required=True,
+                                   help='Password is required',
+                                   location='json')
+
+        args = self.reqparse.parse_args()
+
+        user = User_model.user_id(args['username'], args['password'])
+        
+        if user:
+            access_token = create_access_token(identity = user)
+            refresh_token = create_refresh_token(identity = user)
+            return {
+                "message": "Login successful",
+                "access_token": access_token,
+                "refresh_token": refresh_token
+                }
+        else:
+            return {'message': 'Wrong credentials'}
 
