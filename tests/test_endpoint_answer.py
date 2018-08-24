@@ -38,7 +38,7 @@ class BaseTestCase(TestCase):
         }
 
         self.test_answer = {
-            "answer_details": "It is a simple way of creating a list"
+            "answer_details": "It is a simple way of creating a lists"
         }
 
         self.blank_answer = {
@@ -102,4 +102,4 @@ class TestAnswers(BaseTestCase):
             data=json.dumps(self.blank_answer),
             content_type='application/json',  headers = {'Authorization' : 'Bearer '+ access_token })
 
-        self.assertEqual(result.status_code, 400)    
+        self.assertEqual(result.status_code, 404)    
