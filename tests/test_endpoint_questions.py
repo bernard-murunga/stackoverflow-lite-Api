@@ -1,5 +1,5 @@
 from unittest import TestCase
-from app import create_app
+from api import create_app
 import json
 from api.resources.questions import questions_dictionary
 from api.resources.answers import answers_dictionary
