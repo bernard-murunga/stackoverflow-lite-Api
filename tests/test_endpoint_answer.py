@@ -38,7 +38,7 @@ class BaseTestCase(TestCase):
         }
 
         self.test_answer = {
-            "answer_details": "It is a simple way of creating a list"
+            "answer_details": "It is a simple way of creating a lists"
         }
 
         self.blank_answer = {
