@@ -1,5 +1,5 @@
 from unittest import TestCase
-from app import create_app
+from api import create_app
 import json
 from api.resources.questions import questions_dictionary
 from api.resources.answers import answers_dictionary
@@ -69,8 +69,8 @@ class AllQuestionsTestCase(BaseTestCase):
 
         self.post_question()
 
-        response = self.test_client.get('/api/v1/questions/6', headers = {'Authorization' : 'Bearer '+ access_token })
-        self.assertEqual(response.status_code, 200)
+        response = self.test_client.get('/api/v1/questions/29', headers = {'Authorization' : 'Bearer '+ access_token })
+        self.assertEqual(response.status_code, 404)
    
 
     def testing_question_deletion(self):
