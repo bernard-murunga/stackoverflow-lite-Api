@@ -78,19 +78,7 @@ class TestAnswers(BaseTestCase):
 
         return results
 
-    def test_post_answer(self):
-        # test if user can post answer
-
-        self.post_question()
-        get_token = json.loads(self.test_login.data.decode())
-        access_token = get_token['access_token']
-
-        answer = self.test_client.post(
-            'api/v1/questions/1/answers',
-            data=json.dumps(self.test_answer),
-            content_type='application/json',  headers = {'Authorization' : 'Bearer '+ access_token })
-
-        self.assertEqual(answer.status_code, 201)
+      
 
     def test_blank_answer(self):
         self.post_question()
