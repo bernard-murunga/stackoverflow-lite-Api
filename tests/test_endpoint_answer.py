@@ -102,4 +102,4 @@ class TestAnswers(BaseTestCase):
             data=json.dumps(self.blank_answer),
             content_type='application/json',  headers = {'Authorization' : 'Bearer '+ access_token })
 
-        self.assertEqual(result.status_code, 400)    
+        self.assertEqual(result.status_code, 404)    
