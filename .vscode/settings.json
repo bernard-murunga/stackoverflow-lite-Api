@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "${workspaceFolder}\\venv\\Scripts\\python.exe"
+    "python.pythonPath": "${workspaceFolder}\\venv\\Scripts\\python.exe",
+    "python.unitTest.unittestEnabled": true,
+    "python.unitTest.autoTestDiscoverOnSaveEnabled": true
 }
